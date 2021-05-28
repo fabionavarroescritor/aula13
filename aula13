@@ -1,0 +1,47 @@
+PFont font; //variável de fonte
+
+void setup() {
+
+  smooth(); // ajustar distorção da fonte
+  noCursor();
+
+  background(255); //canvas
+  size(1020, 680);
+
+  font = loadFont("ArialRoundedMTBold-20.vlw"); //carrega fonte
+  textFont(font, 45);
+}
+void draw() {
+  
+  color [] c = {#8b2469,#d22f54,#f26f49};
+  int indice = int(map(mouseX, 0, width, round(0), round(3)));
+    
+
+  fill(c[indice]);    //fundofalso
+  rectMode(CORNER);
+  rect(0, 0, width, height);
+
+  for (int x = 0; x < width; x+=80) { //construção da grade
+    for (int y = 0; y < height; y+=80) {
+
+      float Plshearx = map(x, 0, width, 10, 100);  //variáveis para distorção 
+      float Plsheary = map(y, 0, height, 10, 100); 
+
+      push(); //abre matriz
+
+      translate(x, y);   
+      rotate(radians(Plshearx+mouseX));
+      //rotate(radians(Plsheary+mouseY));
+      shearX(radians(Plshearx+mouseX));   //translação e distorção da palavra
+      shearY(radians(Plsheary+mouseY));
+      fill(#f2cf3d);
+      text("distorção", 80, 80 ); //escreve a palavra usando a fonte carregada
+
+      if (mousePressed) {   //desenho da segunda palavra
+        fill(#25267e);
+        text("discurso", width/2, height/2);
+      }
+      pop(); //fecha matriz
+    }
+  }
+}
